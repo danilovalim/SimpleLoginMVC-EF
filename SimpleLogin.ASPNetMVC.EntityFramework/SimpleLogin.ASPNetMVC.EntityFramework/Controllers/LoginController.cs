@@ -60,6 +60,7 @@ namespace SimpleLogin.ASPNetMVC.EntityFramework.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(User u)
         {
                 using (LoginContext db = new LoginContext())
