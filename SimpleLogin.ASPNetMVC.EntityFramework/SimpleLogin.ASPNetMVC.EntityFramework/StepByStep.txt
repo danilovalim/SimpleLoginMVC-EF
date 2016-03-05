@@ -1,0 +1,134 @@
+﻿Simple Login With ASP NET MVC - Tutorial
+
+1- Create a empty new Web Project using MVC structure
+
+2- Create a model class with the name "User"
+
+3- Add the properties into this class with the follow paramaters:
+int = UserID
+string = FirstName, LastName, UserName, Password
+
+4- Using Nuget Package, add Entity Framework 
+
+5- Add a new class and give the name "LoginContext"
+
+6- Into this class, add ": DbContext" to inherit from Entity Framework and use "using System.Data.Entitie" as a reference
+
+7- Add a new propertie (public DbSet<User> user { get; set; }
+
+8- In "Web.config", add a <connectionStrings> inside Configurations
+
+9- Fill this new configuration with 
+<add name="LoginContext" <connectionString="Data Source=.\SQLEXPRESS;Intial Catalog=name of database;Integrated Security=True" providerName="System.Data.SqlClient" />
+
+10- Create a new Controller
+"LoginController"
+
+11- Into this new Controller, add a new ActionResult
+public ActionResult Login()
+{
+    return view();
+}
+
+12- Add a new ActionResult
+[HttpPost]
+public ActionResult Login(User u)
+{
+	if(ModelState.isValid)
+	{
+		using(LoginContext db = new LoginContext())
+		{
+			User visitant = db.user.Where(x=>x.UserName.Equals(u.UserName) && x.Password.Equals(u.Password));
+
+			if(visitant!=null)
+			{
+				Session["FirstName"] = visitant.FirstName;
+				Session["LastName"] = visitant.LastName;
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				return view(u);
+			}
+		}
+	}
+	else
+	{
+		return View(u);
+	}
+}
+
+13- Into the "Index" ActionResult fill with:
+
+public ActionResult Index()
+{
+	if(Session["FirstName"] "= null)
+	{
+		return View();
+	}
+	else
+	{
+		return RedirectToAction("Login");
+	}
+}
+
+14- Build the Project
+
+15- Add the View from "Index" ActionResult using Empty (without Model)
+
+16- Into the Index View, put this:
+if(Session["FirsName"] != null)
+{
+	<b>Welcome @Session["FirstName"] @Session["LastName"]</b>
+}
+
+17- Add the View from Login using Create Template, User like Model Class and LoginContext like Context
+
+18- Into Login View, erase the fields from "FirstName" and "LastName"
+
+19- Change the Password Html helper from @Html.EditFor to @Html.PasswordFor
+
+20- Create a new ActionResult named "Register"
+
+21- Create another "Register" ActionResult:
+[HttpPost]
+public ActionResult Register(User u)
+{
+	if(ModelState.isValid)
+	{
+		using(LoginContext db = new LoginContext())
+		{
+			db.user.Add(u);
+			db.SaveChanges();
+			return RedirectToAction("Login");
+		}
+	}
+	else
+	{
+		return View(u);
+	}
+}
+
+22- Add the View for the Register ActionResult using Create as a Template, User like a Class Model and LoginContext as a Context
+
+23- Into the View from Register, change the Password Html Helper to @Html.PasswordFor
+
+24- Build, Save and Test using the Register View to create a new User and trying to acess the System into Login View.
+ If the Index View shows, then your System is working
+
+ 25- Add the Data Annottations into the User Class
+ Example:
+ [Required(erroMessage="Please insert your First name!")]
+ public string FirstName {get; set;}
+
+
+ 26-After altered the User Class, you will need use Migrations, for this use Package Manager Console  and type "enable-migrations"
+
+ 27- After the Migrations create a new directory called "Migrations", type "add InsertedDataAnnottations"
+
+ 28- Type "update-database"
+
+ 29- Build, Save and Test again. Try a new user register and then a use this new register for Login into System. If the Index page shows, then your system is working.
+
+
+
