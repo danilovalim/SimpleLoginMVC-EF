@@ -32,11 +32,18 @@ namespace SimpleLogin.ASPNetMVC.EntityFramework.Controllers
         {
             if(ModelState.IsValid)
             {
-                using (LoginContext db = new LoginContext())
+                try{
+                    using (LoginContext db = new LoginContext())
+                    {
+                        db.user.Add(u);
+                        db.SaveChanges();
+                        return RedirectToAction("Login");
+                    }
+                }
+                catch
                 {
-                    db.user.Add(u);
-                    db.SaveChanges();
-                    return RedirectToAction("Login");
+                    ViewBag.message = "Error, please try again!";
+                    return View(u);
                 }
             }
             else
@@ -55,8 +62,6 @@ namespace SimpleLogin.ASPNetMVC.EntityFramework.Controllers
         [HttpPost]
         public ActionResult Login(User u)
         {
-            if(ModelState.IsValid)
-            {
                 using (LoginContext db = new LoginContext())
                 {
                     User visitant = db.user.Where(x => x.UserName.Equals(u.UserName) && x.Password.Equals(u.Password)).FirstOrDefault();
@@ -72,15 +77,6 @@ namespace SimpleLogin.ASPNetMVC.EntityFramework.Controllers
                         return View(u);
                     }
                 }
-            }
-            else
-            {
-                return View(u);
-            }
-
-            
-
-                
         }
     }
 }

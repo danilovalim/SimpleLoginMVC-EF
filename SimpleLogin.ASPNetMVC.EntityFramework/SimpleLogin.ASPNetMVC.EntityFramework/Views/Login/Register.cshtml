@@ -6,6 +6,11 @@
 
 <h2>Register</h2>
 
+@if(ViewBag.message != "")
+{
+    <b>@ViewBag.Message</b>
+}
+
 
 @using (Html.BeginForm()) 
 {
@@ -54,10 +59,6 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>

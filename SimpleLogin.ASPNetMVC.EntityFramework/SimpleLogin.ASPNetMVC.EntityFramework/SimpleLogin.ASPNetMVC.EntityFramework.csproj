@@ -152,6 +152,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603051647196_InitialCreate.cs" />
+    <Compile Include="Migrations\201603051647196_InitialCreate.Designer.cs">
+      <DependentUpon>201603051647196_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603051727084_addNotations.cs" />
+    <Compile Include="Migrations\201603051727084_addNotations.Designer.cs">
+      <DependentUpon>201603051727084_addNotations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\LoginContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -179,6 +188,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201603051647196_InitialCreate.resx">
+      <DependentUpon>201603051647196_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603051727084_addNotations.resx">
+      <DependentUpon>201603051727084_addNotations.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
